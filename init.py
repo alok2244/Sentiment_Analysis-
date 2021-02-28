@@ -10,11 +10,11 @@ def home():
    # return tf_idf,log_reg,naive_bayes
     return render_template("home.html")
 
-@app.route("/result")
+"""@app.route("/result")
 def result():
     return render_template("result.html")
 
-
+"""
 def predict_text(text):
     textdata = sm.vectorizer.transform([sm.preprocess(text)])
     
@@ -29,7 +29,7 @@ def basic():
     if request.method == 'POST':
         twee=request.form["tweet"]
         
-    tweet_prediction_from_LR=sm.predict_text(twee)
+    tweet_prediction_from_LR=predict_text(twee)
     
         
     return tweet_prediction_from_LR
