@@ -1,0 +1,161 @@
+<html>
+   <head>
+      <link rel="stylesheet" href="{{url_for('static',filename="styles/analyser.css")}}">
+   </head>
+   <body>
+      <div class="title">
+         <div class = "title_name">
+            <h1>SENTIMENT ANANLYSIS </h1>
+         </div>
+      </div>
+      <div class="topnav">
+         <a class="active" href="/">Home</a>
+         <a href="/analyser">Analyser</a>
+         <a href="#project">Project</a>
+         <a href="#about">About</a>
+      </div>
+      <div class="label_box">
+      <div class="label">
+         <h1>ANALYSER</h1>
+      </div>
+      <form action="/analyser_result" method="post">
+         <div class="text_area">
+            <textarea name="tweet_box" rows=10 cols=235 placeholder="ENTER THE TWEET"></textarea>
+         </div>
+         
+         <div>
+            <label class="container">All
+            <input type="radio" checked value="all" name="radio">
+            <span class="checkmark"></span>
+            </label>
+            <label class="container">Logistic regression
+            <input type="radio" name="radio" value="logistic_reg">
+            <span class="checkmark"></span>
+            </label>
+            <label class="container">Naive Bayes 
+            <input type="radio" name="radio" value="naive_bayes">
+            <span class="checkmark"></span>
+            </label>
+            <label class="container">SVM
+            <input type="radio" name="radio" value="svm_model">
+            <span class="checkmark"></span>
+            </label>
+         </div>
+         
+         <div>
+             <input type="submit" value="CHECK" class="button"></input>
+         </div >
+      </form>
+      
+      <div class="sentiment_title">
+         <h1>
+            SENTIMENT
+         </h1>
+      </div>
+{% block content %}
+    
+    {% if choosed_model=="all" %}
+        <div class="tweet">
+            <p><b>{{tweet}}</b></p>
+        </div>
+        
+        <div class="mname">
+            <h2><b><u>BY Logistic Regression Model:-</u></b></h2>
+        </div>
+        {% if log_score==0 %}
+            <div class="negative"><h2>NEGATIVE<h2></div> 
+        {% else %}
+            <div class="positive"><h2>POSITIVE<h2></div> 
+        {% endif %}
+        
+        <div  class="mname">
+           <h2><b><u>BY Naive Bayes Model:-</u></b></h2>
+        </div>      
+        {% if naive_score==0 %}
+            <div class="negative"><h2>NEGATIVE<h2></div> 
+        {% else %}
+             <div class="positive"><h2>POSITIVE<h2></div> 
+        {% endif %}
+        
+        <div class="mname">
+            <h2><b><u>BY SVM Model:-</u></b></h2>
+        </div>        
+        {% if svm_score==0 %}
+            <div class="negative"><h2>NEGATIVE<h2></div> 
+        {% else %}
+            <div class="positive"><h2>POSITIVE<h2></div> 
+        {% endif %}   
+        
+    {% else %}
+    
+        {% if s_value==10 %}
+        <div class="positive"><h2>POSITIVE<h2></div>
+        <div class="negative"><h2>NEGATIVE<h2></div>
+        {% else %}
+            <div class="tweet">
+                <p ><b>{{tweet}}</b></p>
+            </div>
+            {% if s_value==0 %}
+                <div class="negative"><h2>NEGATIVE<h2></div> 
+            {% else %}
+                <div class="positive"><h2>POSITIVE<h2></div> 
+                
+            {% endif %}
+        {% endif %}
+    {% endif %}
+    
+{% endblock content %}
+
+
+      <div class="sentiment_title">
+         <h1>
+            Model Details
+         </h1>
+      </div>
+      <div class="box">
+         <div class="model_box">
+            <div class="models">
+               <h3 class="model_title"> Logistic Regression</h3>
+               <div class="records">
+                  {% if ( choosed_model=="logistic_reg" or choosed_model=="all" )%}
+                      <h4> accuracy:{{log_acc}}%</h4>
+                      
+                      <h4>time:{{log_time}}</h4>
+                  {% else %}
+                      <h4> accuracy:0.00</h4>
+                      <h4>time:0.00</h4>
+                  {% endif %}
+               </div>
+            </div>
+         </div>
+         <div class="model_box">
+            <div class="models">
+               <h3 class="model_title">Naive Bayes</h3>
+               <div class="records">
+                  {% if( choosed_model=="naive_bayes" or choosed_model=="all")%}
+                      <h4> accuracy:{{naive_acc}}%</h4>
+                      <h4>time:{{naive_time}}</h4>
+                  {% else %}
+                      <h4> accuracy:0.00</h4>
+                      <h4>time:0.00</h4>
+                  {% endif %}
+               </div>
+            </div>
+         </div>
+         <div class="model_box">
+            <div class="models">
+               <h3 class="model_title"> SVM</h3>
+               <div class="records">
+                  {% if ( choosed_model=="svm_model" or choosed_model=="all" )%}
+                      <h4> accuracy:{{svm_acc}}%</h4>
+                      <h4>time:{{svm_time}}</h4>
+                  {% else %}
+                      <h4> accuracy:0.00</h4>
+                      <h4>time:0.00</h4>
+                  {% endif %}
+               </div>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>
