@@ -20,8 +20,8 @@ from sklearn.naive_bayes import BernoulliNB
 from sklearn.svm import LinearSVC
 import time
 import pickle
-#nltk.download('stopwords')
-#all_stopwords = stopwords.words('english')
+nltk.download('stopwords')
+all_stopwords = stopwords.words('english')
     
 #loading data
 
@@ -64,17 +64,19 @@ def preprocess(tweet , stem = True):
     return " ".join(processedText)
     
         
-#droping 600000 data
+#dropping 600000 data
 
 cleared_dataset = dataset.sample(frac=1).reset_index(drop=True)
 cleared_dataset = cleared_dataset.iloc[0:1000000]
 
-#appling preprocessing
+#applying preprocessing
 
 cleared_dataset = cleared_dataset.drop(cleared_dataset.index[0]).reset_index()
 cleared_dataset = cleared_dataset.drop(['time','flag','user','id','index'],axis=1)
-cleared_dataset["text"] = cleared_dataset["text"].apply(preprocess)
+cleared_dataset["clean_text"] = cleared_dataset["text"].apply(preprocess)
 X = cleared_dataset['text']
+
+
 
 
 #splitting data
@@ -88,7 +90,7 @@ vectorizer = TfidfVectorizer(analyzer='word',max_df=0.90, min_df=2, max_features
 X_train = vectorizer.fit_transform(X_train)
 tfidf_tokens = vectorizer.get_feature_names()
 print("Number of feature_words = ", len(tfidf_tokens))
-#print(tfidf_tokens[1:2000])
+print(tfidf_tokens[1:2000])
 
 X_test  = vectorizer.transform(X_test)  #transforming x_test on X_train's transformation
 
