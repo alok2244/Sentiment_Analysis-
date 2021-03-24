@@ -10,11 +10,17 @@ def home():
    # return tf_idf,log_reg,naive_bayes
     return render_template("home.html")
 
-"""@app.route("/result")
-def result():
-    return render_template("result.html")
 
-"""
+
+
+'''@app.route("/project")
+def project():
+    return render_template("Enter the fiel name")
+
+@app.route("/about")
+def about():
+    return render_template("Enter the fiel name")'''
+
 
 
 @app.route("/analyser")
