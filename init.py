@@ -10,8 +10,20 @@ def home():
    # return tf_idf,log_reg,naive_bayes
     return render_template("home.html")
 
+@app.route("/user")
+def user():
+    return render_template("user.html",table=False)
 
-
+@app.route("/user_result" ,methods=["POST" ,"GET"])
+def user_result():
+    if request.method == 'POST':
+        user_name=request.form["user"]
+        total_no_of_tweets=int(request.form["tweet_no."])
+        
+        dataset=sm.tweets_of_twitter_user(user_name,total_no_of_tweets)
+        return render_template("user.html", dset=dataset,table=True)
+    
+    
 
 '''@app.route("/project")
 def project():
@@ -20,6 +32,7 @@ def project():
 @app.route("/about")
 def about():
     return render_template("Enter the fiel name")'''
+
 
 
 
