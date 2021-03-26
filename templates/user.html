@@ -1,0 +1,67 @@
+<html>
+<head>
+<link rel="stylesheet" href="{{url_for('static',filename="styles/user.css")}}">
+</head>
+<body>
+
+<div class="title">
+  <div class = "title_na
+  </div>me">
+    <h1>SENTIMENT ANANLYSIS </h1>
+  </div>
+  
+<div class="topnav">
+  <a class="active" href="/">Home</a>
+  <a href="/analyser">Analyser</a>
+  <a href="/project">Project</a>
+  <a href="/user">User</a>
+  <a href="/about">About</a>
+</div>
+  
+  
+  <div class="container">
+  <form action="/user_result" method="post">
+  <div class="row">
+     <div class="col-25">
+        <label for="fname">Account Name</label>
+      </div>
+      <div class="right">
+        <label for="fname">Number</label>
+      </div>
+    <div class="col-75">
+      <input type="text" id="fname" name="user" placeholder="Enter the user Name">
+    </div>
+    <div class="left">
+      <input type="number" min="1" name="tweet_no." max="100" placeholder="00">
+      
+    </div>
+    <div class="button">
+      <input type="submit" value="SEARCH" class="sub"></input>
+    </div>
+  </div> 
+    </form>
+  </div>
+  
+  {% if table==True%}
+  <div class="tweets_analysis">
+    <table>
+  <tr>
+    <th style="width:800px">TWEETS</th>
+    <th>LOGISTIC RGRESSION</th>
+    <th>NAIVE BAYES</th>
+    <th>LINEAR SVM</th>
+  </tr>
+  {% for i in range(dset|length) %}
+  <tr>
+    <td>{{dset["Tweets"][i-1]}}</td>
+    <td style="text-align:center">{{dset["log_reg"][i-1]}}</td>
+    <td style="text-align:center">{{dset["naive"][i-1]}}</td>
+    <td style="text-align:center">{{dset["svm"][i-1]}}</td>
+  </tr>
+  {% endfor %}
+</table>
+  </div>
+  {% endif %}
+</body>
+</html>
+  
