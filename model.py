@@ -2,6 +2,8 @@ import re
 import numpy as np
 import pandas as pd
 
+# Tweepy - Python library for accessing the Twitter API.
+import tweepy
 import matplotlib.pyplot as plt
 import seaborn as sns
 from wordcloud import WordCloud
@@ -20,8 +22,8 @@ from sklearn.naive_bayes import BernoulliNB
 from sklearn.svm import LinearSVC
 import time
 import pickle
-nltk.download('stopwords')
-all_stopwords = stopwords.words('english')
+#nltk.download('stopwords')
+#all_stopwords = stopwords.words('english')
     
 #loading data
 
@@ -64,19 +66,17 @@ def preprocess(tweet , stem = True):
     return " ".join(processedText)
     
         
-#dropping 600000 data
+#droping 600000 data
 
 cleared_dataset = dataset.sample(frac=1).reset_index(drop=True)
 cleared_dataset = cleared_dataset.iloc[0:1000000]
 
-#applying preprocessing
+#appling preprocessing
 
 cleared_dataset = cleared_dataset.drop(cleared_dataset.index[0]).reset_index()
 cleared_dataset = cleared_dataset.drop(['time','flag','user','id','index'],axis=1)
-cleared_dataset["clean_text"] = cleared_dataset["text"].apply(preprocess)
+cleared_dataset["text"] = cleared_dataset["text"].apply(preprocess)
 X = cleared_dataset['text']
-
-
 
 
 #splitting data
@@ -90,7 +90,7 @@ vectorizer = TfidfVectorizer(analyzer='word',max_df=0.90, min_df=2, max_features
 X_train = vectorizer.fit_transform(X_train)
 tfidf_tokens = vectorizer.get_feature_names()
 print("Number of feature_words = ", len(tfidf_tokens))
-print(tfidf_tokens[1:2000])
+#print(tfidf_tokens[1:2000])
 
 X_test  = vectorizer.transform(X_test)  #transforming x_test on X_train's transformation
 
@@ -178,8 +178,52 @@ def predict_text(text,model):
     prob = ('%.2f'%max(max(sentiment_prob*100)))
     timer = "%.2f seconds" % (time.time() - start_time)
     return sentiment[0],timer,prob
+
+def tweets_of_twitter_user(user_name,no_of_tweets):
+    config = pd.read_csv("config.csv")
     
 
+    twitterApiKey = str(config['twitterApiKey'][0])
+    twitterApiSecret = str(config['twitterApiSecret'][0])
+    twitterApiAccessToken = str(config['twitterApiAccessToken'][0])
+    twitterApiAccessTokenSecret = str(config['twitterApiAccessTokenSecret'][0])
+
+    # Authenticate
+    auth = tweepy.OAuthHandler(twitterApiKey, twitterApiSecret)
+    auth.set_access_token(twitterApiAccessToken, twitterApiAccessTokenSecret)
+    twetterApi = tweepy.API(auth, wait_on_rate_limit = True)
+
+
+    twitterAccount = user_name
+
+    tweets = tweepy.Cursor(twetterApi.user_timeline, 
+                            screen_name=twitterAccount, 
+                            count=None,
+                            since_id=None,
+                            max_id=None,
+                            trim_user=True,
+                            exclude_replies=True,
+                            contributor_details=False,
+                            include_entities=False
+                            ).items(no_of_tweets);
+    print(tweets)
+
+    tweet_DataBase = pd.DataFrame(data=[tweet.text for tweet in tweets], columns=['Tweet'])
+    
+    for model in [logistic_reg,naive_bayes,svm_model]:
+        prediction=[]
+        for tweets in tweet_DataBase["Tweet"]:
+            prediction.append(predict(model,tweets))
+        tweet_DataBase[model]=prediction
+    tweet_DataBase.columns=["Tweets","log_reg","naive","svm"]    
+    print(tweet_DataBase.head())
+    return tweet_DataBase
+
+    
+def predict(model,text):
+    textdata = vectorizer.transform([preprocess(text)])
+    sentiment = model.predict(textdata)
+    return sentiment[0]
 
 
 
