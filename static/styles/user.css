@@ -1,0 +1,176 @@
+.heading{
+  text-align: left;
+  border-bottom: 3px solid black;
+  padding-top:1px;
+  color :black;
+  font-size:50px;
+  padding-top:10px;
+} 
+
+.title {
+ background-color: black;
+}
+.title_name{
+  text-align: center;
+  border-bottom: 3px solid white;
+  padding-top:1px;
+  color :white;
+  
+/*==============navigation bar==========*/  
+}
+.topnav {
+  background-color: black;
+  overflow: hidden;
+  #border-bottom: 3px solid ;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 6px 10px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: white;
+  color: black;
+}
+
+/* Add an active class to highlight the current page */
+#.topnav a.active {
+  background-color: black;
+  color: white;
+}
+
+/* Hide the link that should open and close the topnav on small screens */
+.topnav .icon {
+  display: none;
+}
+input[type=number]{
+  width: 20%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  #resize: vertical;
+}
+input[type=text],number{
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  #resize: vertical;
+}
+
+label {
+  padding: 12px 0px 12px 0;
+  display: inline-block;
+}
+
+
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  border:1px solid black;
+  
+   #display: flex;
+  justify-content: center;
+  width:800px;
+  
+  margin:auto;
+  margin-top:20px;
+}
+
+.col-25 {
+float: left;
+  
+ width: 20%;
+  margin-top: 6px;
+  margin-left:15px;
+   
+}
+.right{
+  float: right;
+  
+ width: 20%;
+  margin-top: 6px;
+  margin-left:10px;
+}
+
+.col-75 {
+ 
+  width: 60%;
+  
+  margin-left:10px;
+  margin-bottom:10px;
+  
+}
+
+.left{
+ 
+  width:50%;
+ 
+  margin-left:10px;
+  margin-bottom:10px;
+}
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.button{
+  margin-bottom:10px;
+}
+.sub{
+display: block;
+
+  width:780px;
+  margin:auto;
+  margin-top:20px;
+  border: none;
+  
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  color:black;
+  
+  border:2px solid black;
+  border-radius: 10px;}
+
+.tweets_analysis{
+  
+  margin-top:60px;
+}
+table {
+  
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+th{
+  text-align:center;
+  height:50px;
+  
+}
+
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
