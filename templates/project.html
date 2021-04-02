@@ -1,0 +1,271 @@
+<html>
+<head>
+<link rel="stylesheet" href="{{url_for('static',filename="styles/project.css")}}">
+</head>
+<body>
+
+<div class="title">
+  <div class = "title_name">
+    <h1>SENTIMENT ANANLYSIS </h1>
+  </div>
+</div>
+  <div class="topnav">
+      <a class="active" href="/">Home</a>
+      <a href="/analyser">Analyser</a>
+      <a href="/project">Project</a>
+      <a href="/user">User</a>
+      <a href="/about">About</a>
+  </div>
+<div class="heading">
+    What is Sentiment Anlysis?
+ </div>
+<div class ="text">
+    <p>Sentiment analysis uses Natural Language Processing (NLP) to make sense of human language, and machine learning to automatically deliver accurate results.
+    It is the automated process of identifying and classifying subjective information in text data. This might be an opinion, a judgment, or a feeling about a particular topic or product feature.
+    The most common type of sentiment analysis is ‘polarity detection’ and involves classifying statements as positive, negative or neutral.</p>
+</div>
+<div class="image1">
+    <img src="{{url_for('static', filename="images/expression.jpg")}}" width = 400px height = 300px >
+</image>
+</div>
+<br>
+<div class="heading">
+    How to Perform Sentiment Analysis on Twitter Data 
+</div>
+<div class ="text">
+   
+  <h3>Table of Contents</h3>
+    <ol class = "c">
+    <li>Importing Libraries and Dataset</li>
+    <li>Understand the Problem Statement</li>
+    <li>Tweets Preprocessing and Cleaning</li>
+    <li>Story Generation and Visualization from Tweets</li>
+    <li>Extracting Features from Cleaned Tweets</li>
+    <li>Model Building: Sentiment Analysis</li>
+
+  </ol>
+</div>
+<div class ="text">
+  <h4> 1. Importing Libraries and Dataset</h4>
+  <p> The first step in any machine learning project is to import the dataset and libraries required to approach the project.</p> 
+  <br>
+  <h4> 2. Understand the problem statement</h4>
+  <p>It is very crucial to understand the objective before working on the dataset.
+  <br> The problem statement is as follows:<p>
+  <p><i>"The objective of this task is to detect polarity of tweets. For the sake of simplicity, we say a tweet is positive if it has a positive sentiment associated with it and negative if it has negative sentiment associated with it.
+     So, the task is to classify positive or negative tweets from other tweets."</i></p>
+  <p> The dataset contains 6 columns out of which only two columns(sentiment , text) is required. So we will drop all the others in later stage. Now given a training sample of tweets and labels, where label ‘4’ denotes the tweet is positive and label ‘0’ denotes the tweet is negative, your objective is to predict the labels on the test dataset.</p>
+  </div>
+  <div class="image2">
+    <image src = "{{url_for('static', filename="images/dataset.png")}}" width = 1000px height = 300px >
+    </image>
+  <ol class="c" >
+        It contains the following 6 fields:
+    <li>sentiment: the polarity of the tweet (0 = negative, 4 = positive)</li>
+    <li>ids: The id of the tweet (2087)</li>
+    <li>date: the date of the tweet (Sat May 16 23:58:44 UTC 2009)</li>
+    <li>flag: The query (lyx). If there is no query, then this value is NO_QUERY.</li>
+    <li>user: the user that tweeted (robotickilldozr)</li>
+    <li>text: the text of the tweet (Lyx is cool)</li>
+
+    </ol>
+    </div>
+  <div class = "text">
+    <h4>3. Tweets Preprocessing and Cleaning</h4>
+    <p>The preprocessing of the text data is an essential step as it makes the raw text ready for mining, i.e., it becomes easier to extract information from the text and apply machine learning algorithms to it.</p>
+    <p>The Preprocessing steps taken are:</p>
+
+      <ol class ="c">
+    <li>Lower Casing: Each text is converted to lowercase.</li>
+    <li>Removing URLs: Links starting with "http" or "https" or "www" are removed.</li>
+    <li>Removing Usernames: Removing @Usernames. (eg: "@Kaggle" to "")</li>
+    <li>Removing Non-Alphabets: Replacing characters except Digits and Alphabets with a space.</li>
+    <li>Removing Consecutive letters: 3 or more consecutive letters are replaced by 2 letters. (eg: "Heyyyy" to "Heyy")</li>
+    <li>Removing Punctuations: All the punctuations are removed.(eg: ,./?)</li>
+    <li>Removing Stopwords: Stopwords are the English words which does not add much meaning to a sentence. They can safely be ignored without sacrificing the meaning of the sentence. (eg: "the", "he", "have")</li>
+    <li>Stemming: Stemming is the process of eliminating affixes (circumfixes, suffixes, prefixes, infixes) from a word in order to obtain a word stem.. (eg: “Working -> Work”)</li>
+    <li>Lemmatization: The goal is same as with stemming, but stemming a word sometimes loses the actual meaning of the word.
+        Lemmatization usually refers to doing things properly using vocabulary and morphological analysis of words. 
+        It returns the base or dictionary form of a word, also known as the lemma .(eg: "Better -> Good")</li>
+    </ol>
+    <div class="image2">
+    <image src ="{{url_for('static', filename="images/cleared_dataset.png")}}" >
+    </image>
+  </div>
+  <div class = "text">
+     <h4>4. Story Generation and Visualization from Tweets</h4>
+     <p>Visualizing the most common words in the dataset for negative and positive tweets, respectively</p>    
+     <h5> Understanding the common words used in the tweets: WordCloud</h5>
+     <p>A wordcloud is a visualization wherein the most frequent words appear in large size and the less frequent words appear in smaller sizes.</p>
+     <h5><center>Wordcloud : Positive Words</center></h5>
+     <div class="image2">
+      <image src ="{{url_for('static', filename="images/positive_wc.png")}}" >
+      </image>
+    </div>
+  </div>
+  <div>
+      <h5><center>Wordcloud : Negative Words</center></h5>
+     <div class="image2">
+      <image src ="{{url_for('static', filename="images/negative_wc1.png")}}" >
+      </image>
+     </div>
+     </div>
+     <h4>5. Extracting Features from Cleaned Tweets</h4>
+     <h4><center>TF-IDF Vectorization</center></h4>
+     <p>tf-idf stands for Term frequency-inverse document frequency. The tf-idf weight is a weight often used in information retrieval and text mining. 
+       Variations of the tf-idf weighting scheme are often used by search engines in scoring and ranking a document’s relevance given a query. 
+       This weight is a statistical measure used to evaluate how important a word is to a document in a collection or corpus.
+       The importance increases proportionally to the number of times a word appears in the document but is offset by the frequency of the word in the corpus (data-set).</p>
+      <div class="image1">
+      <image src ="{{url_for('static', filename="images/tf_idf_1.png")}}" width = 600px >
+      <image src ="{{url_for('static', filename="images/tf_idf_2.png")}}" width = 400px >
+    </image>
+  </image>
+  </div>
+  <div>
+    <h4>6. Model Building: Sentiment Analysis</h4>
+    <p>We are now done with all the pre-modeling stages required to get the data in the proper form and shape. Now we will be building predictive models on the dataset using the TF-IDF feature set.</p>
+    <h3>a. Logistic Regression</h3>
+    <p>It establishes the relationship between a categorical variable and one or more independent variables. </p>
+    <p> That very basic formula of a straight line:
+      Y= A+BX (where A is the intercept and B is the slope)
+    <p>If we avoid the ‘intercept’ A in this equation, the formula becomes:
+      Y = BX
+
+    <p>In machine learning, it is written as,</p>
+        <div class = "image2">
+        <image src ="{{url_for('static', filename="images/LR_1.png")}}" width = 100px >
+          </image>
+        </div>
+        
+      <p>Here, <b>h</b> is the hypothesis or the predicted value and <b>X</b> is the predictor or input variable. 
+        <br><b>Theta</b> is initialized randomly in the beginning and updated later.
+        <br>For the logistic regression, we need to transform this simple hypothesis using a sigmoid function that returns a value from 0 to 1.
+        <p> A sigmoid function can be called a logistic function as well. Logistic regression uses the sigmoid function to predict the output. Here is the sigmoid activation function:</p>
+        <div class = "image2">
+          <image src ="{{url_for('static', filename="images/LR_2.png")}}" width = 150px >
+            </image>
+          </div>
+      
+      <b>z </b> is the input features multiplied by a randomly initialized term theta.
+      <div class = "image2">
+        <image src ="{{url_for('static', filename="images/LR_3.png")}}" width = 100px >
+          </image>
+        </div>
+      
+      Here, X is the input feature and theta is the randomly initialized values that will be updated in this algorithm.
+      The reason we need to use a logistic function is, the curve of a logistic function looks like this and it returns a value between 0 to 1. So, it is very helpful for classification.:
+      <div class = "image2">
+        <image src ="{{url_for('static', filename="images/LR_4.png")}}" width = 500px >
+          </image>
+        </div>
+        <h4><i>Cost Function</i></h4>
+        <p>The cost function gives you the measure of how far the predicted output(calculated hypothesis ‘h’) is from the original output(y).</p>
+        <div class = "image2">
+          <image src ="{{url_for('static', filename="images/LR_5.png")}}" width = 400px >
+            </image>
+          </div>
+       <h4><i>Gradient Descent</i></h4>
+        <p>We need to update our randomly initialized theta values. Gradient descent equation does just that. If we take a partial differential of the cost function with respect to theta:
+          <div class = "image2">
+            <image src ="{{url_for('static', filename="images/LR_6.png")}}" width = 100px >
+              </image>
+            </div>
+
+       <p>Using this expression above the gradient descent formula becomes:</p>
+       <div class = "image2">
+        <image src ="{{url_for('static', filename="images/LR_7.png")}}" width = 200px >
+          </image>
+        </div>
+
+
+        <h3>b. Naive Bayes</h3>
+        <p>Naive Bayes classifiers are a collection of classification algorithms based on Bayes’ Theorem. 
+          It is not a single algorithm but a family of algorithms where all of them share a common principle, i.e. every pair of features being classified is independent of each other.
+        <h4><i>&nbsp;&nbsp;&nbsp;Bayes Theorem can be written as : </i></h4>
+        <div class = "image2">
+          <image src ="{{url_for('static', filename="images/NB_1.png")}}" width = 300px >
+            </image>
+            </div>
+          <p><i>&nbsp;&nbsp;&nbsp;where,</i></p>
+          <div class = "image2">
+            <image src ="{{url_for('static', filename="images/NB_2.png")}}" width = 200px >
+              </image>
+              </div>
+            <p><i>&nbsp;&nbsp;&nbsp;<b>Bayes Theorem can be rewritten as:</b></i></p>
+            <p>The variable y is the class variable,variable X represents the parameters/features.</p>
+            <div class = "image2">
+              <image src ="{{url_for('static', filename="images/NB_3.png")}}" width = 300px ></image>
+              <p> where,</p>  <image src ="{{url_for('static', filename="images/NB_4.png")}}" width = 300px ></image>
+                </div>
+            
+            <p><i>&nbsp;&nbsp;&nbsp;<b>Expanding the equation we get,</b></i></p>
+            <div class = "image2">
+              <image src ="{{url_for('static', filename="images/NB_5.png")}} width = 500px >
+                </image>
+                </div>
+            <p>We drop the denominator (the probability of observing the data in this instance) as it is a constant for all calculations.</p>
+            <div class = "image2">
+              <image src ="{{url_for('static', filename="images/NB_6.png")}} width = 400px ></image>
+                </div>
+            <p>Now, we need to create a classifier model. For this, we find the probability of given set of inputs for all possible values of the class variable y and pick up the output with 
+              maximum probability. This can be expressed mathematically as:</p>
+            <div class = "image2">
+                <image src ="{{url_for('static', filename="images/NB_7.png")}}" width = 400px ></image>
+                  </div>
+            <h4><i><b><u>Bernoulli Naive Bayes</u></b></i></h4>
+            <p>In the multivariate Bernoulli event model, features are independent booleans (binary variables) describing inputs. Like the multinomial model, this model is popular for document
+               classification tasks, where binary term occurrence(i.e. a word occurs in a document or not) features are used rather than term frequencies(i.e. frequency of a word in the document).</p>
+            <h3>c. Support Vector Machines</h3>
+            <p>Support Vector Machine” (SVM) is a supervised machine learning algorithm which can be used for both classification or regression challenges.
+               In the SVM algorithm, we plot each data item as a point in n-dimensional space (where n is number of features you have) with the value of each feature being the value of a
+                particular coordinate. Then, we perform classification by finding the hyper-plane that differentiates the two classes very well.</p>
+                <div class = "image2">
+                  <image src ="{{url_for('static', filename="images/SVM_1.png")}}" width = 400px ></image>
+                    </div>
+                <p><b>Linear SVM:</b> Linear SVM is used for linearly separable data, which means if a dataset can be classified into two classes by using a single straight line, then such data is termed as
+               linearly separable data, and classifier is used called as Linear SVM classifier.</p>
+               <p>Suppose we have a dataset that has two tags (green and blue), and the dataset has two features x1 and x2.
+                  We want a classifier that can classify the pair(x1, x2) of coordinates in either green or blue. </p>
+                  <div class = "image2">
+                    <image src ="{{url_for('static', filename="images/SVM_2.png")}}" width = 300px ></image>
+                      </div>
+              <p>So as it is 2-d space so by just using a straight line, we can easily separate these two classes. But there can be multiple lines that can separate these classes.</p>
+                  <div class = "image2">
+                    <image src ="{{url_for('static', filename="images/SVM_3.png")}}" width = 300px ></image>
+                     </div>
+              <p>Hence, the SVM algorithm helps to find the best line or decision boundary; this best boundary or region is called as a <i><b>hyperplane</b></i>. SVM algorithm finds the closest point of the 
+                lines from both the classes. These points are called<i><b> support vectors</b></i>. The distance between the vectors and the hyperplane is called as<i><b> margin</b></i>. And the goal of SVM is to maximize
+                 this margin. The hyperplane with maximum margin is called the<i><b> optimal hyperplane</b></i>.</p>
+                 <div class = "image2">
+                  <image src ="{{url_for('static', filename="images/SVM_4.png")}}" width = 350px ></image>
+                    </div>
+               
+              <p><b>Non-linear SVM:</b> Non-Linear SVM is used for non-linearly separated data, which means if a dataset cannot be classified by using a straight line, then such data is termed as 
+                non-linear data and classifier used is called as Non-linear SVM classifier.</p>
+                <div class = "image2">
+                  <image src ="{{url_for('static', filename="images/SVM_5.png")}}" width = 350px ></image>
+                    </div>
+               
+              <p>So to separate these data points, we need to add one more dimension. For linear data, we have used two dimensions x and y, so for non-linear data, we will add a third dimension z.
+                 <br>It can be calculated as: <b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;z=x^2 +y^2  </b> 
+                
+              <p> By adding the third dimension, the sample space will become as below image:</p>
+              <div class = "image2">
+                <image src ="{{url_for('static', filename="images/SVM_6.png")}}" width = 350px ></image>
+                  </div>
+              <p>So now, SVM will divide the datasets into classes in the following way. </p>
+              <div class = "image2">
+                <image src ="{{url_for('static', filename="images/SVM_7.png")}}" width = 350px ></image>
+                  </div>
+             <p>Since we are in 3-d Space, hence it is looking like a plane parallel to the x-axis. If we convert it in 2-d space with z=1, then it will become as:</p>
+             <div class = "image2">
+              <image src ="{{url_for('static', filename="images/SVM_8.png")}}" width = 350px ></image>
+                </div>
+            
+                
+               
+      </div>
+
+</body>
+</html>
