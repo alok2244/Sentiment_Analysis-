@@ -16,7 +16,7 @@
   padding-top:1px;
   color :white;
   
-/*==============navigation bar==========*/  
+/==============navigation bar==========/  
 }
 .topnav {
   background-color: black;
@@ -77,12 +77,12 @@ input[type=submit]:hover {
   background-color: #45a049;
 }
 
-.container {
+.box{
   border-radius: 5px;
   background-color: #f2f2f2;
   border:1px solid black;
   
-   #display: flex;
+   display: flex;
   justify-content: center;
   width:800px;
   
@@ -90,38 +90,28 @@ input[type=submit]:hover {
   margin-top:20px;
 }
 
-.col-25 {
-float: left;
-  
- width: 20%;
-  margin-top: 6px;
-  margin-left:15px;
-   
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
 }
-.right{
-  float: right;
-  
- width: 20%;
+
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.col-25 {
+  float: left;
+  width: 25%;
   margin-top: 6px;
-  margin-left:10px;
 }
 
 .col-75 {
- 
-  width: 60%;
-  
-  margin-left:10px;
-  margin-bottom:10px;
-  
+  float: left;
+  width: 70%;
+  margin-top: 6px;
 }
 
-.left{
- 
-  width:50%;
- 
-  margin-left:10px;
-  margin-bottom:10px;
-}
 /* Clear floats after the columns */
 .row:after {
   content: "";
