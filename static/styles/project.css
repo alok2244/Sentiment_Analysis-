@@ -1,0 +1,83 @@
+.heading{
+    text-align: center;
+    padding-top:1px;
+    color :black;
+    font-size : 30px;
+    padding-top : 10px;
+} 
+.title {
+ background-color: black;
+}
+.title_name{
+  text-align: center;
+  border-bottom: 3px solid white;
+  padding-top:1px;
+  color :white;
+  
+/==============navigation bar==========/  
+}
+.topnav {
+  background-color: black;
+  overflow: hidden;
+  #border-bottom: 3px solid ;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 6px 10px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: white;
+  color: black;
+}
+
+/* Add an active class to highlight the current page */
+#.topnav a.active {
+  background-color: black;
+  color: white;
+}
+
+/* Hide the link that should open and close the topnav on small screens */
+.topnav .icon {
+  display: none;
+} 
+.title {
+    background-color: black;
+}
+.title_name{
+    text-align: center;
+    border-bottom: 3px solid white;
+    padding-top:1px;
+    color :white;
+    
+ 
+}
+.text{
+    font-size:20px
+}
+.image1{
+    border-radius: 8px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%
+    
+}
+.image2{
+    border-radius: 8px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%
+}
+.ol.c {
+    list-style-type: lower-roman;
+  }
