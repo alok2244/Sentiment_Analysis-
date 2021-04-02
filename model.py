@@ -20,18 +20,19 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import BernoulliNB
 #from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import LinearSVC
+from sklearn.calibration import CalibratedClassifierCV
 import time
-import pickle
+
 #nltk.download('stopwords')
 #all_stopwords = stopwords.words('english')
     
-#loading data
+#loading data=============================================================================
 
 dataset_columns = ["sentiment" , "id" , "time" , "flag" , "user" , "text" ]
 dataset_coding = "ISO-8859-1"
-dataset = pd.read_csv("training.1600000.processed.noemoticon.csv", names = dataset_columns , encoding = dataset_coding )
+dataset = pd.read_csv("twitter_dataset.csv", names = dataset_columns , encoding = dataset_coding )
 
-#preprocessing function
+#preprocessing function=============================================================================
 
 def preprocess(tweet , stem = True):
     processedText = []
@@ -66,12 +67,12 @@ def preprocess(tweet , stem = True):
     return " ".join(processedText)
     
         
-#droping 600000 data
+#droping 600000 data------------------------------------------------------------------
 
 cleared_dataset = dataset.sample(frac=1).reset_index(drop=True)
 cleared_dataset = cleared_dataset.iloc[0:1000000]
 
-#appling preprocessing
+#appling preprocessing=============================================================================
 
 cleared_dataset = cleared_dataset.drop(cleared_dataset.index[0]).reset_index()
 cleared_dataset = cleared_dataset.drop(['time','flag','user','id','index'],axis=1)
@@ -79,7 +80,7 @@ cleared_dataset["text"] = cleared_dataset["text"].apply(preprocess)
 X = cleared_dataset['text']
 
 
-#splitting data
+#splitting data---------------------------------------------------------------------------------
 
 y = cleared_dataset['sentiment']
 X_train, X_test, y_train, y_test = train_test_split(X , y, test_size = 0.30, random_state = 10)
@@ -102,7 +103,7 @@ x_min = X_train.min()
 X_train = (X_train - x_min)/x_max
 X_test = (X_test - x_min)/x_max
 
-#model evaluation
+#model evaluation=============================================================================
 
 def model(model):
     y_pred = model.predict(X_test)
@@ -152,32 +153,25 @@ def naiveBayes():
     
 def svm():
     global svm_model
-    svm_model = LinearSVC()
+    svm = LinearSVC()
+    svm_model = CalibratedClassifierCV(svm) 
     svm_model.fit(X_train, y_train)
     model(svm_model)
-
+    
 svm()
 logisticRegression()        
 naiveBayes()    
+
 def predict_text(text,model):
     start_time = time.time()
     sentiment=0
     sentiment_prob=[[]]
     textdata = vectorizer.transform([preprocess(text)])
-    if model=="logistic_reg":
-        sentiment = logistic_reg.predict(textdata)
-        sentiment_prob = logistic_reg.predict_proba(textdata)
-    elif model=="naive_bayes":
-        sentiment = naive_bayes.predict(textdata)
-        sentiment_prob = naive_bayes.predict_proba(textdata)
-    elif model=="svm_model":
-        sentiment = svm_model.predict(textdata)
-        sentiment_prob = [[0,0]]
-    print(sentiment_prob)
-    print(type(sentiment_prob))
+    sentiment = model.predict(textdata)
+    sentiment_prob = model.predict_proba(textdata)   
     prob = ('%.2f'%max(max(sentiment_prob*100)))
     timer = "%.2f seconds" % (time.time() - start_time)
-    return sentiment[0],timer,prob
+    return sentiment[0],timer,prob      
 
 def tweets_of_twitter_user(user_name,no_of_tweets):
     config = pd.read_csv("config.csv")
