@@ -25,11 +25,11 @@ def user_result():
     
     
 
-'''@app.route("/project")
+@app.route("/project")
 def project():
-    return render_template("Enter the fiel name")
+    return render_template("project.html")
 
-@app.route("/about")
+'''@app.route("/about")
 def about():
     return render_template("Enter the fiel name")'''
 
@@ -43,14 +43,14 @@ def analyser():
     return render_template("analyser.html",s_value=10,choosed_model="none")
 
 def predict_for_all(text):
-    model="logistic_reg"
-    sentiment_by_log,log_timer,log_prob=sm.predict_text(text,model)
     
-    model="naive_bayes"        
-    sentiment_by_bayes,bayes_timer,naive_prob=sm.predict_text(text,model)
+    sentiment_by_log,log_timer,log_prob=sm.predict_text(text,sm.logistic_reg)
     
-    model="svm_model"
-    sentiment_by_svm,svm_timer,svm_prob=sm.predict_text(text,model)
+         
+    sentiment_by_bayes,bayes_timer,naive_prob=sm.predict_text(text,sm.naive_bayes)
+    
+   
+    sentiment_by_svm,svm_timer,svm_prob=sm.predict_text(text,sm.svm_model)
     
     return sentiment_by_log,log_timer,sentiment_by_bayes,bayes_timer,sentiment_by_svm,svm_timer,log_prob,naive_prob,svm_prob
     
@@ -64,13 +64,19 @@ def result():
         twee=request.form["tweet_box"]
         model_request=request.form["radio"]
         
+        if model_request=="logistic_reg":
+            model=sm.logistic_reg
+        if model_request=="naive_bayes":
+            model=sm.naive_bayes
+        if model_request=="svm_model":
+            model=sm.svm_model
         
         if model_request=="all":
             sentiment_by_log,log_timer,sentiment_by_bayes,bayes_timer,sentiment_by_svm,svm_timer,log_prob,naive_prob,svm_prob=predict_for_all(twee)
             
             return render_template("analyser.html",choosed_model=model_request,tweet=twee,log_score=sentiment_by_log,log_time=log_timer,naive_score=sentiment_by_bayes,naive_time=bayes_timer,svm_score=sentiment_by_svm,svm_time=svm_timer,log_acc=log_prob,naive_acc=naive_prob,svm_acc=svm_prob)
         else:
-            score,timer,prob=sm.predict_text(twee, model_request)
+            score,timer,prob=sm.predict_text(twee, model)
             print(prob)
             return render_template("analyser.html",s_value=score ,tweet=twee,choosed_model=model_request,log_time=timer,naive_time=timer,svm_time=timer,log_acc=prob,naive_acc=prob,svm_acc=prob)
    
