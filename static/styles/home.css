@@ -1,11 +1,14 @@
 
 .heading{
-  text-align: left;
-  border-bottom: 3px solid black;
+  text-align: center;
   padding-top:1px;
-  color :black;
-  font-size:50px;
-  padding-top:10px;
+  color :White;
+ 
+  font-family: arial;
+  font-size:65px;
+  line-height:170%;
+  align-items:center;
+  
 } 
 
 .title {
@@ -13,6 +16,7 @@
 }
 .title_name{
   text-align: center;
+font-size:25px;
   border-bottom: 3px solid white;
   padding-top:1px;
   color :white;
@@ -62,4 +66,59 @@ image {
   font-size:25px
   width:500px;
   margin: auto;
+}
+.mainBlock{
+  background-color:#0fa3f3
+;
+ 
+}
+img {
+  display: block;
+ 
+  width:1200px;
+  height:680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.title_name.about{
+border-bottom: 0px;
+text-align: left;
+padding-top:10px;
+margin:10px;
+padding-bottom:20px; 
+font-size:30px;
+}
+.title_name.about.one
+{
+  margin-left:300px;
+  text-align: left;
+  padding-bottom:20px; 
+}
+.title_name.prj{
+  border-bottom: 0px;
+  padding-top:1px;
+  
+}
+.box{
+  margin:auto;
+  margin-left:30px;
+  margin-right:30px;
+}
+
+.image{
+  margin-top:10px;
+  display: block;
+  width:100%;
+  height:;
+  border:5px solid black;
+}
+
+
+.title.footer{
+  margin-top:20px;
+ 
+  
+}
+table,tr{
+  color:white;
 }

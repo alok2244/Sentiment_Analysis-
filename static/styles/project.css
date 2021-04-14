@@ -81,3 +81,25 @@
 .ol.c {
     list-style-type: lower-roman;
   }
+.title.footer{
+  margin-top:20px;
+ 
+  
+}
+table,tr{
+  color:white;
+}
+.mainBlock{
+  background-color:#0fa3f3;
+  
+.title_name.about.one
+{
+  margin-left:300px;
+  text-align: left;
+  padding-bottom:20px; 
+}
+.title_name.prj{
+  border-bottom: 0px;
+  padding-top:1px;
+  
+}
