@@ -1,120 +1,10 @@
-
-#.label_box{
-  background-color:blue;
-  border:5px solid green;
-}
-.label{
- # background-color:blue;
-  border-top: 20px solid white;
-  text-align: center;
-  
-  padding-top:1px;
-  color :BLACK;
- }
-.text_area{
-  
-  border:1px solid black;
-display: flex;
-justify-content: center;
-  width:900px;
-  margin:auto
-}
-
-textarea::placeholder {
-  color: black;
-  font-size: 1.8em;
-  font-style: italic;
-  
-}
-
-/*===========radio button============
-/* The container */
-.container {
-  display: block;
-  position: relative;
-  padding-left: 35px;
-  margin-bottom: 12px;
-  padding-top:10px;
-  cursor: pointer;
-  font-size: 22px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  width:865px;
-  margin:auto;
-}
-
-/* Hide the browser's default radio button */
-.container input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-}
-
-/* Create a custom radio button */
-.checkmark {
-  
-  position: absolute;
-  top: 10px;
-  left: 0;
-  height: 25px;
-  width: 25px;
-  background-color:gray;
-  border-radius: 50%;
-}
-
-/* On mouse-over, add a grey background color */
-.container:hover input ~ .checkmark {
-  background-color: #ccc;
-}
-
-/* When the radio button is checked, add a blue background */
-.container input:checked ~ .checkmark {
-  background-color: black;
-}
-
-/* Create the indicator (the dot/circle - hidden when not checked) */
-.checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
-}
-
-/* Show the indicator (dot/circle) when checked */
-.container input:checked ~ .checkmark:after {
-  display: block;
-}
-
-/* Style the indicator (dot/circle) */
-.container .checkmark:after {
- 	top: 9px;
-	left: 9px;
-	width: 8px;
-	height: 8px;
-	border-radius: 50%;
-	background: white;
-}
-/*=================radio button=================*/
-.button{
-  
-  display: block;
-  width:1000px;
-  margin:auto;
-  margin-top:20px;
-  border: none;
-  background-color: black;
-  padding: 14px 28px;
-  font-size: 16px;
-  cursor: pointer;
-  text-align: center;
-  color:white;
-  
-  border:5px solid white;
-  border-radius: 25px;
-}
- 
-
+.heading{
+    text-align: center;
+    padding-top:1px;
+    color :black;
+    font-size : 30px;
+    padding-top : 10px;
+} 
 .title {
  background-color: black;
 }
@@ -124,7 +14,7 @@ textarea::placeholder {
   padding-top:1px;
   color :white;
   
-/*==============navigation bar==========*/  
+/==============navigation bar==========/  
 }
 .topnav {
   background-color: black;
@@ -158,85 +48,60 @@ textarea::placeholder {
 /* Hide the link that should open and close the topnav on small screens */
 .topnav .icon {
   display: none;
+} 
+.title {
+    background-color: black;
 }
-
-/*==============navigation bar==========*/  
-.model_box {
- width: calc((100% - 300px)/3); /* calc because of the padding */
-  padding:15px 50px;
-  height: 200px;
-  margin:auto;
-  float: left;
-  display: block;
-  margin-bottom:60px;
+.title_name{
+    text-align: center;
+    border-bottom: 3px solid white;
+    padding-top:1px;
+    color :white;
 }
-.box{
-padding-top:30px;
-}
-.models{
-  background-color:black;
-  border:3px solid white;
-  border-radius:25px;
-  height:200px
-}
-.model_title{
-  background-color:black;
-  text-align: center;
-  padding-top:5px;
-  color :white;
-}
-.records{
+.text{
+    font-size:20px;
+    color:white;
   
-  padding-right:5px;
-  background-color:white;
-  height:150px;
+}
+.image1{
+    border-radius: 8px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
   border:2px solid black;
-  text-align: center;
-  
+    
 }
-.sentiment_title{
-  text-align: left;
-  padding-top:5px;
-  color :Black;
-  border-bottom:2px solid ;
-  margin-bottom: 30px;
+.image2{
+    border-radius: 8px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    border:2px solid black;
 }
-.positive{
-  text-align: center;
-  padding-top:5px;
-  color :white;
-  background-color:green;
-  border:2px solid ;
-  border-radius:25px;
-  
-  width:500px;
-  margin: auto;
-  margin-bottom: 30px;
-  
-}
-
-.negative{
-  text-align: center;
-  padding-top:5px;
-  color :white;
-  background-color:RED;
-  border:2px solid ;
-  border-radius:25px;
-  width:500px;
-  margin: auto;
+.ol.c {
+    list-style-type: lower-roman;
+  }
+.title.footer{
+  margin-top:20px;
  
+  
 }
-
-.tweet{
-text-align: center;
-  color :black;
-  margin: auto;
-  margin-bottom:50px;
-  font-size:30px;
+table,tr{
+  color:white;
 }
-
-.mname{
-text-align: left;
-  padding-top:5px;
-  widht:30px;
+.mainBlock{
+  background-color:#0fa3f3;
+  
+.title_name.about.one
+{
+  margin-left:300px;
+  text-align: left;
+  padding-bottom:20px; 
+}
+.title_name.prj{
+  border-bottom: 0px;
+  padding-top:1px;
+  
 }

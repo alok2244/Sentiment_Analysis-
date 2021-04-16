@@ -22,6 +22,7 @@
   background-color: black;
   overflow: hidden;
   #border-bottom: 3px solid ;
+  
 }
 
 /* Style the links inside the navigation bar */
@@ -37,14 +38,14 @@
 
 /* Change the color of links on hover */
 .topnav a:hover {
-  background-color: white;
+  background-color: #0fa3f3;
   color: black;
 }
 
 /* Add an active class to highlight the current page */
-#.topnav a.active {
-  background-color: black;
-  color: white;
+.topnav a.active {
+  background-color: #0fa3f3;
+  color: black;
 }
 
 /* Hide the link that should open and close the topnav on small screens */
@@ -87,7 +88,7 @@ input[type=submit]:hover {
   width:800px;
   
   margin:auto;
-  margin-top:20px;
+  margin-top:0px ;
 }
 
 label {
@@ -97,7 +98,7 @@ label {
 
 
 input[type=submit]:hover {
-  background-color: #45a049;
+  background-color: #0fa3f3;
 }
 
 .col-25 {
@@ -139,8 +140,8 @@ display: block;
   border-radius: 10px;}
 
 .tweets_analysis{
+  background-color:#0fa3f3;
   
-  margin-top:60px;
 }
 table {
   
@@ -163,4 +164,57 @@ th{
 
 tr:nth-child(even) {
   background-color: #dddddd;
+}
+.mainBlock{
+  padding-top:20px;
+  background-color:#0fa3f3;
+  padding-bottom:60px ;
+}
+.graph{
+  padding-top:5px;
+  color:white;
+  text-align:center;
+  font-size:30px;
+  background: #0fa3f3;
+  
+ }
+
+button {
+  font-size: 25px;
+  background: #;
+  color: black;
+  border: 0.25rem solid white;
+  padding: 5px 20px;
+  margin: 1rem;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  border-radius: 15px;
+}
+button:hover {
+  color:white;
+}
+button::after {
+  content: "";
+  background: #0fa3f3;
+  position: absolute;
+  z-index: -1;
+  padding: 0.85em 0.75em;
+  display: block;
+}
+button[class^="slide"]::after {
+  transition: all 0.35s;
+}
+button[class^="slide"]:hover::after {
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  transition: all 0.35s;
+}
+button.slide_from_bottom::after {
+  left: 0;
+  right: 0;
+  top: 100%;
+  bottom: -100%;
 }

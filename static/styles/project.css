@@ -57,11 +57,11 @@
     border-bottom: 3px solid white;
     padding-top:1px;
     color :white;
-    
- 
 }
 .text{
-    font-size:20px
+    font-size:20px;
+    color:white;
+  
 }
 .image1{
     border-radius: 8px;
