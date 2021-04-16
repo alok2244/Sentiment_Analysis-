@@ -1,6 +1,50 @@
 <html>
    <head>
       <link rel="stylesheet" href="{{url_for('static',filename="styles/user.css")}}">
+       <script>
+
+function graph_for_two(x,y) {
+
+var chart = new CanvasJS.Chart("chartContainer",
+ {
+	animationEnabled: true,
+	theme: "light1", // "light1", "light2", "dark1", "dark2"
+	title:{
+		text: "Sentiment Count"
+	},
+	axisY: {
+	minimum: 0,
+    maximum: {{length}},
+    title: "Total Number Of"
+	},
+	data: [{        
+		type: "column",
+		dataPoints: [      
+			{ y: x, label: "Positive" },
+			{ y: y,  label: "Negative" },
+			
+			
+			
+		]
+	}]
+});
+chart.render();
+}
+
+function required()
+{
+var empt = document.form1.user.value;
+var x=document.form1.tweet_no.value;
+if (empt === "")
+{
+alert("Please Fill UNser Name");
+return false;
+}
+if(isNaN(x)||x==="")
+alert("Please Fill number");
+return false;
+}
+</script>
    </head>
    <body>
       <div class="title">
@@ -15,43 +59,45 @@
          <a href="/user">User</a>
          <a href="/about">About</a>
       </div>
+      <div class="mainBlock">
       <div class="box">
-         <form action="/user_result" method="post">
+         <form action="/user_result" method="post" onsubmit="required()" name="form1">
             <div class="row">
-    <div class="col-25">
-      <label for="fname">First Name</label>
-    </div>
-    <div class="col-75">
-      <input type="text" id="fname" name="firstname" placeholder="Your name..">
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-25">
-      <label for="lname">No of Tweets</label>
-    </div>
-    <div class="col-75">
-      <input type="number" id="lname" name="lastname" placeholder="00">
-    </div>
-  </div>
-               <div class="button">
-                  <input type="submit" value="SEARCH" class="sub"></input>
+               <div class="col-25">
+                  <label for="fname">Account Name</label>
                </div>
-  
+               <div class="col-75">
+                  <input type="text" id="fname" name="user" placeholder="Enter the user Name">
+               </div>
             </div>
-         </form>
+            <div class="row">
+               <div class="col-25">
+                  <label for="lname">No of Tweets</label>
+               </div>
+               <div class="col-75">
+                  <input type="number" min="1" name="tweet_no" max="100" placeholder="00">
+               </div>
+            </div>
+            <div class="button">
+               <input type="submit" value="SEARCH" class="sub"></input>
+            </div>
+      </div>
+      </form>
       </div>
       {% if table==True%}
       <div class="tweets_analysis">
          <table>
             <tr>
                <th style="width:800px">TWEETS</th>
+               <th> SENTIMENT</th>
                <th>LOGISTIC RGRESSION</th>
                <th>NAIVE BAYES</th>
-               <th> LINEAR SVM</th>
+               <th>LINEAR SVM</th>
             </tr>
             {% for i in range(dset|length) %}
             <tr>
                <td>{{dset["Tweets"][i-1]}}</td>
+               <td style="text-align:center">{{dset["Sentiment"][i-1]}}</td>
                <td style="text-align:center">{{dset["log_reg"][i-1]}}</td>
                <td style="text-align:center">{{dset["naive"][i-1]}}</td>
                <td style="text-align:center">{{dset["svm"][i-1]}}</td>
@@ -60,5 +106,15 @@
          </table>
       </div>
       {% endif %}
+      
+    
+ <div class="graph">       
+<label style="border-bottom:3px solid white">Check The Average Precentage</label>
+  <br>
+<button class="slide_from_bottom" onclick="graph_for_two({{positive}},{{negative}})">Click</button>
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+ </div>
+    </div>
    </body>
 </html>

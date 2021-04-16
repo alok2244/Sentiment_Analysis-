@@ -1,9 +1,48 @@
 <html>
    <head>
       <link rel="stylesheet" href="{{url_for('static',filename="styles/analyser.css")}}">
-   </head>
-   <body>
-      <div class="title">
+  <script>
+function graph(x,y,z) {
+
+var chart = new CanvasJS.Chart("chartContainer",
+ {
+	animationEnabled: true,
+	theme: "light1", // "light1", "light2", "dark1", "dark2"
+	title:{
+		text: "PROBALITY SCORE"
+	},
+	axisY: {
+    	minimum: 0,
+        maximum: 100,
+		title: "Probablity%"
+	},
+	data: [{        
+		type: "column",
+		dataPoints: [      
+			{ y: x, label: "Logistic Regression" },
+			{ y: y,  label: "Naive Bayes" },
+			{ y: z,  label: "SVM" },
+			
+			
+		]
+	}]
+});
+chart.render();
+}
+
+function required()
+{
+var empt = document.form1.tweet_box.value;
+if (empt === "")
+{
+alert("Please Enter The Tweet");
+return false;
+}
+}
+</script>
+</head>
+<body>
+<div class="title">
          <div class = "title_name">
             <h1>SENTIMENT ANANLYSIS </h1>
          </div>
@@ -13,13 +52,14 @@
          <a href="/analyser">Analyser</a>
          <a href="/project">Project</a>
          <a href="/user">User</a>
-         <a href="/about">About</a>
+
       </div>
+      <div class="mainBlock">
       <div class="label_box">
       <div class="label">
          <h1>ANALYSER</h1>
       </div>
-      <form action="/analyser_result" method="post">
+      <form name="form1" action="/analyser_result" method="post" onsubmit="required()">
          <div class="text_area">
             <textarea name="tweet_box" rows=10 cols=235 placeholder="ENTER THE TWEET"></textarea>
          </div>
@@ -47,8 +87,7 @@
              <input type="submit" value="CHECK" class="button"></input>
          </div >
       </form>
-      
-      <div class="sentiment_title">
+        <div class="sentiment_title">
          <h1>
             SENTIMENT
          </h1>
@@ -158,5 +197,14 @@
             </div>
          </div>
       </div>
-   </body>
+<div class="graph">       
+<label style="border-bottom:3px solid white">TO See Score Graph</label>
+  <br>
+<button class="slide_from_bottom" onclick="graph({{log_acc}},{{naive_acc}},{{svm_acc}})">Click</button>
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+ </div>
+ </div>    
+ 
+</body>
 </html>

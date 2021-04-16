@@ -14,7 +14,6 @@
       <a href="/analyser">Analyser</a>
       <a href="/project">Project</a>
       <a href="/user">User</a>
-      <a href="/about">About</a>
   </div>
   <div class="mainBlock">
 <div class="heading">
@@ -47,10 +46,10 @@
   </ol>
 </div>
 <div class ="text">
-  <h4> 1. Importing Libraries and Dataset</h4>
+  <h4 style="color:black"> 1. Importing Libraries and Dataset</h4>
   <p> The first step in any machine learning project is to import the dataset and libraries required to approach the project.</p> 
   <br>
-  <h4> 2. Understand the problem statement</h4>
+  <h4 style="color:black"> 2. Understand the problem statement</h4>
   <p>It is very crucial to understand the objective before working on the dataset.
   <br> The problem statement is as follows:<p>
   <p><i>"The objective of this task is to detect polarity of tweets. For the sake of simplicity, we say a tweet is positive if it has a positive sentiment associated with it and negative if it has negative sentiment associated with it.
@@ -72,7 +71,7 @@
     </ol>
     </div>
   <div class = "text">
-    <h4>3. Tweets Preprocessing and Cleaning</h4>
+    <h4 style="color:black">3. Tweets Preprocessing and Cleaning</h4>
     <p>The preprocessing of the text data is an essential step as it makes the raw text ready for mining, i.e., it becomes easier to extract information from the text and apply machine learning algorithms to it.</p>
     <p>The Preprocessing steps taken are:</p>
 
@@ -94,24 +93,24 @@
     </image>
   </div>
   <div class = "text">
-     <h4>4. Story Generation and Visualization from Tweets</h4>
+     <h4 style="color:black">4. Story Generation and Visualization from Tweets</h4>
      <p>Visualizing the most common words in the dataset for negative and positive tweets, respectively</p>    
      <h5> Understanding the common words used in the tweets: WordCloud</h5>
      <p>A wordcloud is a visualization wherein the most frequent words appear in large size and the less frequent words appear in smaller sizes.</p>
-     <h5><center>Wordcloud : Positive Words</center></h5>
+     <h5 style="color:black"><center>Wordcloud : Positive Words</center></h5>
      <div class="image2">
       <image src ="{{url_for('static', filename="images/positive_wc.png")}}" >
       </image>
     </div>
   </div>
   <div>
-      <h5><center>Wordcloud : Negative Words</center></h5>
+      <h5 style="color:black"><center>Wordcloud : Negative Words</center></h5>
      <div class="image2">
       <image src ="{{url_for('static', filename="images/negative_wc1.png")}}" >
       </image>
      </div>
      </div>
-     <h4>5. Extracting Features from Cleaned Tweets</h4>
+     <h4 style="color:black">5. Extracting Features from Cleaned Tweets</h4>
      <h4><center>TF-IDF Vectorization</center></h4>
      <p>tf-idf stands for Term frequency-inverse document frequency. The tf-idf weight is a weight often used in information retrieval and text mining. 
        Variations of the tf-idf weighting scheme are often used by search engines in scoring and ranking a document’s relevance given a query. 
@@ -124,7 +123,7 @@
   </image>
   </div>
   <div>
-    <h4>6. Model Building: Sentiment Analysis</h4>
+    <h4 style="color:black">6. Model Building: Sentiment Analysis</h4>
     <p>We are now done with all the pre-modeling stages required to get the data in the proper form and shape. Now we will be building predictive models on the dataset using the TF-IDF feature set.</p>
     <h3>a. Logistic Regression</h3>
     <p>It establishes the relationship between a categorical variable and one or more independent variables. </p>
@@ -160,7 +159,7 @@
         <image src ="{{url_for('static', filename="images/LR_4.png")}}" width = 500px >
           </image>
         </div>
-        <h4><i>Cost Function</i></h4>
+        <h4 style="color:black"><i>Cost Function</i></h4>
         <p>The cost function gives you the measure of how far the predicted output(calculated hypothesis ‘h’) is from the original output(y).</p>
         <div class = "image2">
           <image src ="{{url_for('static', filename="images/LR_5.png")}}" width = 400px >
@@ -180,10 +179,10 @@
         </div>
 
 
-        <h3>b. Naive Bayes</h3>
+        <h3 style="color:black">b. Naive Bayes</h3>
         <p>Naive Bayes classifiers are a collection of classification algorithms based on Bayes’ Theorem. 
           It is not a single algorithm but a family of algorithms where all of them share a common principle, i.e. every pair of features being classified is independent of each other.
-        <h4><i>&nbsp;&nbsp;&nbsp;Bayes Theorem can be written as : </i></h4>
+        <h4 style="color:black"><i>&nbsp;&nbsp;&nbsp;Bayes Theorem can be written as : </i></h4>
         <div class = "image2">
           <image src ="{{url_for('static', filename="images/NB_1.png")}}" width = 300px >
             </image>
@@ -214,17 +213,17 @@
             <div class = "image2">
                 <image src ="{{url_for('static', filename="images/NB_7.png")}}" width = 400px ></image>
                   </div>
-            <h4><i><b><u>Bernoulli Naive Bayes</u></b></i></h4>
+            <h4 style="color:black"><i><b><u>Bernoulli Naive Bayes</u></b></i></h4>
             <p>In the multivariate Bernoulli event model, features are independent booleans (binary variables) describing inputs. Like the multinomial model, this model is popular for document
                classification tasks, where binary term occurrence(i.e. a word occurs in a document or not) features are used rather than term frequencies(i.e. frequency of a word in the document).</p>
-            <h3>c. Support Vector Machines</h3>
+            <h3 style="color:black">c. Support Vector Machines</h3>
             <p>Support Vector Machine” (SVM) is a supervised machine learning algorithm which can be used for both classification or regression challenges.
                In the SVM algorithm, we plot each data item as a point in n-dimensional space (where n is number of features you have) with the value of each feature being the value of a
                 particular coordinate. Then, we perform classification by finding the hyper-plane that differentiates the two classes very well.</p>
                 <div class = "image2">
                   <image src ="{{url_for('static', filename="images/SVM_1.png")}}" width = 400px ></image>
                     </div>
-                <p><b>Linear SVM:</b> Linear SVM is used for linearly separable data, which means if a dataset can be classified into two classes by using a single straight line, then such data is termed as
+                <p><b style="color:black">Linear SVM:</b> Linear SVM is used for linearly separable data, which means if a dataset can be classified into two classes by using a single straight line, then such data is termed as
                linearly separable data, and classifier is used called as Linear SVM classifier.</p>
                <p>Suppose we have a dataset that has two tags (green and blue), and the dataset has two features x1 and x2.
                   We want a classifier that can classify the pair(x1, x2) of coordinates in either green or blue. </p>
@@ -242,7 +241,7 @@
                   <image src ="{{url_for('static', filename="images/SVM_4.png")}}" width = 350px ></image>
                     </div>
                
-              <p><b>Non-linear SVM:</b> Non-Linear SVM is used for non-linearly separated data, which means if a dataset cannot be classified by using a straight line, then such data is termed as 
+              <p><b style="color:black">Non-linear SVM:</b> Non-Linear SVM is used for non-linearly separated data, which means if a dataset cannot be classified by using a straight line, then such data is termed as 
                 non-linear data and classifier used is called as Non-linear SVM classifier.</p>
                 <div class = "image2">
                   <image src ="{{url_for('static', filename="images/SVM_5.png")}}" width = 350px ></image>
