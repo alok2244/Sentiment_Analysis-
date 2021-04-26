@@ -197,13 +197,21 @@ return false;
             </div>
          </div>
       </div>
+  
+
 <div class="graph">       
+{% if choosed_model=="all" %}   
 <label style="border-bottom:3px solid white">TO See Score Graph</label>
   <br>
+  
 <button class="slide_from_bottom" onclick="graph({{log_acc}},{{naive_acc}},{{svm_acc}})">Click</button>
+{% endif %}
 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
  </div>
+ 
+
  </div>    
  
 </body>
