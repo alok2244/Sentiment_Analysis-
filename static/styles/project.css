@@ -9,11 +9,11 @@
  background-color: black;
 }
 .title_name{
-  text-align: center;
+ text-align: center;
+font-size:25px;
   border-bottom: 3px solid white;
   padding-top:1px;
   color :white;
-  
 /==============navigation bar==========/  
 }
 .topnav {
