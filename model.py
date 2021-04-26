@@ -2,6 +2,7 @@ import re
 import numpy as np
 import pandas as pd
 
+from twitter import *
 # Tweepy - Python library for accessing the Twitter API.
 import tweepy
 import matplotlib.pyplot as plt
@@ -162,6 +163,14 @@ svm()
 logisticRegression()        
 naiveBayes()    
 
+config = pd.read_csv("config.csv")
+    
+
+twitterApiKey = str(config['twitterApiKey'][0])
+twitterApiSecret = str(config['twitterApiSecret'][0])
+twitterApiAccessToken = str(config['twitterApiAccessToken'][0])
+twitterApiAccessTokenSecret = str(config['twitterApiAccessTokenSecret'][0])
+
 def predict_text(text,model):
     start_time = time.time()
     sentiment=0
@@ -174,13 +183,7 @@ def predict_text(text,model):
     return sentiment[0],timer,prob      
 
 def tweets_of_twitter_user(user_name,no_of_tweets):
-    config = pd.read_csv("config.csv")
     
-
-    twitterApiKey = str(config['twitterApiKey'][0])
-    twitterApiSecret = str(config['twitterApiSecret'][0])
-    twitterApiAccessToken = str(config['twitterApiAccessToken'][0])
-    twitterApiAccessTokenSecret = str(config['twitterApiAccessTokenSecret'][0])
 
     # Authenticate
     auth = tweepy.OAuthHandler(twitterApiKey, twitterApiSecret)
@@ -204,13 +207,26 @@ def tweets_of_twitter_user(user_name,no_of_tweets):
 
     tweet_DataBase = pd.DataFrame(data=[tweet.text for tweet in tweets], columns=['Tweet'])
     
+    ### DataFrame for the sentiment of the user
+    sentiment_score=[]
+    for i in range(0,no_of_tweets):
+        sentiment_score.append(0)
+    
     for model in [logistic_reg,naive_bayes,svm_model]:
-        prediction=[]
-        for tweets in tweet_DataBase["Tweet"]:
-            prediction.append(predict(model,tweets))
-        tweet_DataBase[model]=prediction
-    tweet_DataBase.columns=["Tweets","log_reg","naive","svm"]    
-    print(tweet_DataBase.head())
+            prediction=[]
+            i=0
+            for tweets in tweet_DataBase["Tweet"]:
+                sen,timer,prob=predict_text(tweets,model)
+                
+                prediction.append(float(prob))
+                sentiment_score[i]=sentiment_score[i]+sen
+                
+                i+=1
+            tweet_DataBase[model]=prediction
+            
+    sentiment_score=["Positive" if i>4 else "Negative" for i in sentiment_score]
+    tweet_DataBase.columns=["Tweets","log_reg","naive","svm"]
+    tweet_DataBase.insert(1,"Sentiment",sentiment_score,True)
     return tweet_DataBase
 
     
@@ -218,6 +234,19 @@ def predict(model,text):
     textdata = vectorizer.transform([preprocess(text)])
     sentiment = model.predict(textdata)
     return sentiment[0]
+
+def Twitter_account_name(user_name):
+    account_name=""
+    twitter = Twitter(auth = OAuth(twitterApiAccessToken,
+                                   twitterApiAccessTokenSecret,
+                                   twitterApiKey,
+                                   twitterApiSecret))
+    results = twitter.users.search(q = user_name)
+    
+    for user in results:
+        if user["screen_name"]==user_name or user["name"]==user_name :
+            account_name=user["name"]
+    return account_name
 
 
 

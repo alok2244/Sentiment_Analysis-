@@ -1,27 +1,52 @@
 from flask import Flask,render_template,request
 import model as sm
-import time
 
 app=Flask(__name__)
 
 @app.route("/")
 def home():
     
-   # return tf_idf,log_reg,naive_bayes
+   # return tf_idf,log_reg,naive_bayes}
     return render_template("home.html")
 
 @app.route("/user")
 def user():
     return render_template("user.html",table=False)
 
-@app.route("/user_result" ,methods=["POST" ,"GET"])
+@app.route("/user_result" ,methods=["POST"])
 def user_result():
     if request.method == 'POST':
         user_name=request.form["user"]
-        total_no_of_tweets=int(request.form["tweet_no."])
+        print("user name="+user_name)
+        acc_name=""
+        
+        total_no_of_tweets=int(request.form["tweet_no"])
+        print(total_no_of_tweets)
         
         dataset=sm.tweets_of_twitter_user(user_name,total_no_of_tweets)
-        return render_template("user.html", dset=dataset,table=True)
+        print("here")
+        '''avg_log=dataset['log_reg'].sum(axis=0)/len(dataset)
+        avg_naive=dataset['naive'].sum(axis=0)/len(dataset)
+        avg_svm=dataset['svm'].sum(axis=0)/len(dataset)
+        log=avg_log,naive=avg_naive,s=avg_svm
+        
+        ''' 
+        if 'Positive' in dataset.values :
+            pos=dataset["Sentiment"].value_counts()['Positive']
+        else:
+            pos=0
+        
+        if 'Negative' in dataset.values :
+            neg=dataset["Sentiment"].value_counts()['Negative']
+        else:
+            neg=0
+       
+        print(dataset)
+        acc_name=sm.Twitter_account_name(user_name)
+        print("Accouct_name="+acc_name)
+      
+        
+        return render_template("user.html", dset=dataset,table=True,positive=pos,negative=neg,length=len(dataset),user_name_for_user_tab=user_name,account_name=acc_name)
     
     
 
@@ -51,6 +76,8 @@ def predict_for_all(text):
     
    
     sentiment_by_svm,svm_timer,svm_prob=sm.predict_text(text,sm.svm_model)
+    
+    
     
     return sentiment_by_log,log_timer,sentiment_by_bayes,bayes_timer,sentiment_by_svm,svm_timer,log_prob,naive_prob,svm_prob
     
