@@ -57,22 +57,27 @@ return false;
          <a href="/analyser">Analyser</a>
          <a href="/project">Project</a>
          <a href="/user">User</a>
-         <a href="/about">About</a>
+         
       </div>
       <div class="mainBlock">
+        <div class="label" >
+          <h1>User's Tweets Analysis  </h1>
+          </div>
       <div class="box">
          <form action="/user_result" method="post" onsubmit="required()" name="form1">
             <div class="row">
                <div class="col-25">
-                  <label for="fname">Account Name</label>
+                  <label class="tooltip" for=" fname">Account Name<span class="tooltiptext">Twitter User Name Ex. @twitter</span></label>
+                 
                </div>
+                
                <div class="col-75">
                   <input type="text" id="fname" name="user" placeholder="Enter the user Name">
                </div>
             </div>
             <div class="row">
                <div class="col-25">
-                  <label for="lname">No of Tweets</label>
+                  <label class="tooltip" for="lname">No of Tweets <span class="tooltiptext">Number of Tweets to Analyse</span></label>
                </div>
                <div class="col-75">
                   <input type="number" min="1" name="tweet_no" max="100" placeholder="00">
@@ -81,26 +86,40 @@ return false;
             <div class="button">
                <input type="submit" value="SEARCH" class="sub"></input>
             </div>
-      </div>
+      
       </form>
+   
       </div>
-      {% if table==True%}
+     {% if table==True%}
+     <div class="user_name">
+       <label style=" border-bottom:2px solid white;">{{account_name}}</label>
+     </div>
+      
       <div class="tweets_analysis">
          <table>
             <tr>
+                <th> Sr.No.</th>
                <th style="width:800px">TWEETS</th>
                <th> SENTIMENT</th>
                <th>LOGISTIC RGRESSION</th>
                <th>NAIVE BAYES</th>
                <th>LINEAR SVM</th>
             </tr>
-            {% for i in range(dset|length) %}
+            {% for i in range((dset|length)) %}
             <tr>
-               <td>{{dset["Tweets"][i-1]}}</td>
-               <td style="text-align:center">{{dset["Sentiment"][i-1]}}</td>
-               <td style="text-align:center">{{dset["log_reg"][i-1]}}</td>
-               <td style="text-align:center">{{dset["naive"][i-1]}}</td>
-               <td style="text-align:center">{{dset["svm"][i-1]}}</td>
+                <td style="text-align:center">{{i+1}}</td>
+               <td>{{dset["Tweets"][i]}}</td>
+               
+               {% if (dset["Sentiment"][i]=="Positive") %} 
+               <td style="text-align:center;background:green;color:white;"><b>{{dset["Sentiment"][i]}}</b></td>
+               {%else%}
+               <td style="text-align:center;background:red;color:white;"><b>{{dset["Sentiment"][i]}}</b></td>
+               
+               {% endif%}
+               
+               <td style="text-align:center">{{dset["log_reg"][i]}}</td>
+               <td style="text-align:center">{{dset["naive"][i]}}</td>
+               <td style="text-align:center">{{dset["svm"][i]}}</td>
             </tr>
             {% endfor %}
          </table>
@@ -109,12 +128,14 @@ return false;
       
     
  <div class="graph">       
+ {% if table==True%}
 <label style="border-bottom:3px solid white">Check The Average Precentage</label>
   <br>
 <button class="slide_from_bottom" onclick="graph_for_two({{positive}},{{negative}})">Click</button>
+{% endif %}
 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
  </div>
-    </div>
+    </d>
    </body>
 </html>

@@ -14,34 +14,36 @@
          <a href="/analyser">Analyser</a>
          <a href="/project">Project</a>
          <a href="/user">User</a>
-         
       </div>
       <div class="mainBlock">
-      <div class="heading">
-         <h1>Welcome To Sentiment Analyser</h1>
-      </div>
-      <div class ="text">
-         <image src ="{{url_for('static', filename="images/twitter_img.png")}}">
-      </div>
-      <div>
+         <div class="heading">
+            <h1>Welcome To Sentiment Analyser</h1>
+         </div>
+         <div class ="text">
+            <image src ="{{url_for('static', filename="images/twitter_img.png")}}">
+         </div>
          <div>
-            <div class="title_name about">
-               <label> Predict User's Tweets</label>
-            </div>
-            <div class="box">
-               <p>
-                  Predict The Sentiment Of  Multiple Tweets Of Twitter Users.
-               </p>
-               <img class="image" src ="{{url_for('static', filename="images/user_img.png")}}">
+            <div>
+               <div class="title_name about">
+                  <label> Predict User's Tweets</label>
+               </div>
+               <div class="box">
+                  <div class="polaroid">
+                     <img class="image" src ="{{url_for('static', filename="images/user_img.png")}}">
+                     <p style="font-size:20px">Predict The Sentiment Of  Multiple Tweets Of Twitter Users.</p>
+                  </div>
+               </div>
             </div>
             <div class="title_name about">
                <label> Predict Tweets/Sentance</label>
             </div>
             <div class="box">
-               <p>
-                Predict The Sentiment Of Any Tweets Of Twitter Users Or Sentances(text) .
-               </p>
-               <img class="image" src ="{{url_for('static', filename="images/analyser_img.png")}}">
+               <div class="box">
+                  <div class="polaroid">
+                     <img class="image" src ="{{url_for('static', filename="images/analyser_img.png")}}">
+                     <p style="font-size:20px"> Predict The Sentiment Of Any Tweets Of Twitter Users Or Sentances(text) .</p>
+                  </div>
+               </div>
             </div>
          </div>
       </div>
