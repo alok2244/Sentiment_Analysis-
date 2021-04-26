@@ -12,6 +12,7 @@
 }
 .title_name{
   text-align: center;
+font-size:25px;
   border-bottom: 3px solid white;
   padding-top:1px;
   color :white;
@@ -43,7 +44,7 @@
 }
 
 /* Add an active class to highlight the current page */
-.topnav a.active {
+#.topnav a.active {
   background-color: #0fa3f3;
   color: black;
 }
@@ -79,6 +80,7 @@ input[type=submit]:hover {
 }
 
 .box{
+  padding-top:7px;
   border-radius: 5px;
   background-color: #f2f2f2;
   border:1px solid black;
@@ -140,7 +142,7 @@ display: block;
   border-radius: 10px;}
 
 .tweets_analysis{
-  background-color:#0fa3f3;
+  background-color:white;
   
 }
 table {
@@ -218,3 +220,46 @@ button.slide_from_bottom::after {
   top: 100%;
   bottom: -100%;
 }
+.user_name{
+text-align:center;
+  color:white;
+  paddin-top:10px;
+  
+  padding-bottom:20px;
+  font-size:25px;
+ 
+
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+  
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 220px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 10px 10px;
+  
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+.label{
+ # background-color:blue;
+  border-top: 5px solid #0fa3f3;
+  text-align: center;
+  color :white;
+  font-size:20px;
+ }
