@@ -2,7 +2,28 @@
    <head>
       <link rel="stylesheet" href="{{url_for('static',filename="styles/user.css")}}">
        <script>
+function required()
+{
+    var empt = document.form1.user.value;
+    var x=document.form1.tweet_no.value;
+    if (empt === "")
+    {
+        alert("Account Name can't be EMPTY");
+        document.form1.user.focus();
+        return false;
+    }
+    
+    if(isNaN(x)||x==="")
+    {
+        alert("No of Tweets can't be EMPTY");
+        document.form1.tweet_no.focus();
+        return false;
+    }
+    
+}
+</script>
 
+<script>
 function graph_for_two(x,y) {
 
 var chart = new CanvasJS.Chart("chartContainer",
@@ -29,22 +50,7 @@ var chart = new CanvasJS.Chart("chartContainer",
 	}]
 });
 chart.render();
-}
-
-function required()
-{
-var empt = document.form1.user.value;
-var x=document.form1.tweet_no.value;
-if (empt === "")
-{
-alert("Please Fill UNser Name");
-return false;
-}
-if(isNaN(x)||x==="")
-alert("Please Fill number");
-return false;
-}
-</script>
+}</script>
    </head>
    <body>
       <div class="title">
@@ -64,7 +70,8 @@ return false;
           <h1>User's Tweets Analysis  </h1>
           </div>
       <div class="box">
-         <form action="/user_result" method="post" onsubmit="required()" name="form1">
+      
+         <form action="/user_result" method="post" onsubmit="return required()" name="form1">
             <div class="row">
                <div class="col-25">
                   <label class="tooltip" for=" fname">Account Name<span class="tooltiptext">Twitter User Name Ex. @twitter</span></label>
@@ -92,7 +99,7 @@ return false;
       </div>
      {% if table==True%}
      <div class="user_name">
-       <label style=" border-bottom:2px solid white;">{{account_name}}</label>
+       <label style=" border-bottom:2px solid white;">{{account_name.upper()}}</label>
      </div>
       
       <div class="tweets_analysis">
@@ -136,6 +143,6 @@ return false;
 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
  </div>
-    </d>
+    
    </body>
 </html>
