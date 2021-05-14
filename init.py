@@ -9,6 +9,11 @@ def home():
    # return tf_idf,log_reg,naive_bayes}
     return render_template("home.html")
 
+#@app.errorhandler(404) 
+def invalid_route(e): 
+ return render_template('hello')
+ 
+
 @app.route("/user")
 def user():
     return render_template("user.html",table=False)
