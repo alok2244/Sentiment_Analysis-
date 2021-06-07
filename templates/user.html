@@ -24,38 +24,138 @@ function required()
 </script>
 
 <script>
-function graph_for_two(x,y) {
+function graph() {
 
-var chart = new CanvasJS.Chart("chartContainer",
- {
+document.getElementById("demo1").innerHTML="LAST "+ {{dset|length}} + " TWEETS ANALYSIS";
+
+var chart = new CanvasJS.Chart("chartContainer", {
 	animationEnabled: true,
-	theme: "light1", // "light1", "light2", "dark1", "dark2"
-	title:{
-		text: "Sentiment Count"
+	title: {
+    	padding: 10,
+		text: "Accuracy Analysis"
+	},
+	axisX: {
+    	
+		minimum: 0,
+		maximum: {{dset|length+2}},
+		title:"TWEET NUMBER"
 	},
 	axisY: {
-	minimum: 0,
-    maximum: {{length}},
-    title: "Total Number Of"
+    	title:"MODEL ACCURACY",
+		minimum: 0,
+		maximum: 120
 	},
-	data: [{        
-		type: "column",
-		dataPoints: [      
-			{ y: x, label: "Positive" },
-			{ y: y,  label: "Negative" },
+	legend: {
+		verticalAlign: "top",
+		horizontalAlign: "right",
+		dockInsidePlotArea: true
+	},
+	toolTip: {
+		shared: true
+	},
+	data: [{
+		name: "LOGISTIC",
+		showInLegend: true,
+		legendMarkerType: "square",
+		type: "area",
+		color: "rgba(255,121,0,0.53)",
+		markerSize: 0,
+		dataPoints: [
+		{% for i in range(dset|length)%}
+			{ x: {{i+1}}, y: {{dset["log_reg"][i]}} },
+		{% endfor %}	
 			
+		]
+	},
+	{
+		name: "NAIVE",
+		showInLegend: true,
+		legendMarkerType: "square",
+		type: "area",
+		color: "rgba(1,94,1,0.3)",
+		markerSize: 0,
+		dataPoints: [
+		{% for i in range(dset|length)%}
+			{ x: {{i+1}}, y: {{dset["naive"][i]}} },
+		{% endfor %}	
 			
+		]
+	},
+  {
+		name: "SVM",
+		showInLegend: true,
+		legendMarkerType: "square",
+		type: "area",
+		color: "rgba(42,1,94,0.33)",
+		markerSize: 0,
+		dataPoints: [
+		{% for i in range(dset|length)%}
+			{ x: {{i+1}}, y: {{dset["svm"][i]}} },
+		{% endfor %}	
 			
 		]
 	}]
 });
+
 chart.render();
-}</script>
+
+
+document.getElementById("demo").innerHTML = "Variation in Accuracy on every Tweet of different Models";
+
+}
+
+</script>
+
+<script>
+function graph2(l_neg,n_neg,s_neg,l_pos,n_pos,s_pos) {
+
+var chart = new CanvasJS.Chart("chartContainer1", {
+	animationEnabled: true,
+	theme: "light2", //"light1", "dark1", "dark2"
+	title:{
+		text: "Division of Positive and Negative Tweets"             
+	},
+	axisY:{
+		interval: 2,
+		
+	},
+	toolTip:{
+		shared: true
+	},
+	data:[{
+		type: "stackedBar",
+		showInLegend: true, 
+		name: "Negative",
+		dataPoints: [
+			{ y: l_neg, label: "Logistic Regression" },
+			{ y: n_neg, label: "Naive Bayes" },
+			{ y: s_neg, label: "SVM" },
+			
+		]
+		},
+		{
+			type: "stackedBar",
+			
+			showInLegend: true, 
+			name: "Positive",
+			dataPoints: [
+				{ y: l_pos, label: "Logistic Regression" },
+				{ y: n_pos, label: "Naive Bayes" },
+				{ y: s_pos, label: "SVM" },
+				]
+		}]
+});
+chart.render();
+document.getElementById("demo2").innerHTML = "Variation of Number of Positive/Negative Tweets on different Models";
+
+}
+</script>
+
    </head>
    <body>
       <div class="title">
          <div class = "title_name">
-            <h1>SENTIMENT ANANLYSIS </h1>
+            <h1>SENTIMENT ANALYSIS </h1>
          </div>
       </div>
       <div class="topnav">
@@ -70,7 +170,7 @@ chart.render();
           <h1>User's Tweets Analysis  </h1>
           </div>
       <div class="box">
-      
+     
          <form action="/user_result" method="post" onsubmit="return required()" name="form1">
             <div class="row">
                <div class="col-25">
@@ -79,7 +179,7 @@ chart.render();
                </div>
                 
                <div class="col-75">
-                  <input type="text" id="fname" name="user" placeholder="Enter the user Name">
+                  <input type="text" id="fname" name="user" placeholder="Enter the user Name" autocomplete="off">
                </div>
             </div>
             <div class="row">
@@ -117,10 +217,10 @@ chart.render();
                 <td style="text-align:center">{{i+1}}</td>
                <td>{{dset["Tweets"][i]}}</td>
                
-               {% if (dset["Sentiment"][i]=="Positive") %} 
-               <td style="text-align:center;background:green;color:white;"><b>{{dset["Sentiment"][i]}}</b></td>
+               {% if (dset["AVG_Sentiment"][i]=="Positive") %} 
+               <td style="text-align:center;background:green;color:white;"><b>{{dset["AVG_Sentiment"][i]}}</b></td>
                {%else%}
-               <td style="text-align:center;background:red;color:white;"><b>{{dset["Sentiment"][i]}}</b></td>
+               <td style="text-align:center;background:red;color:white;"><b>{{dset["AVG_Sentiment"][i]}}</b></td>
                
                {% endif%}
                
@@ -136,13 +236,21 @@ chart.render();
     
  <div class="graph">       
  {% if table==True%}
-<label style="border-bottom:3px solid white">Check The Average Precentage</label>
+<label style="border-bottom:3px solid white">Analysis Of The Above Data</label>
   <br>
-<button class="slide_from_bottom" onclick="graph_for_two({{positive}},{{negative}})">Click</button>
+<button class="slide_from_bottom" onclick="graph();graph2({{dset["log_current"].value_counts()[0]}},{{dset["naive_current"].value_counts()[0]}},{{dset["svm_current"].value_counts()[0]}},{{dset["log_current"].value_counts()[4]}},{{dset["naive_current"].value_counts()[4]}},{{dset["svm_current"].value_counts()[4]}})">Click</button>
 {% endif %}
-<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<p id="demo1"></p>
+<p id="demo"></p>
+<div id="chartContainer" style="height: 450px; width: 80%; margin:auto;"></div>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    
+<p id="demo2"></p>  
+<div id="chartContainer1" style="height: 370px; width: 80%; margin:auto;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+ 
  </div>
+ 
     
    </body>
 </html>
