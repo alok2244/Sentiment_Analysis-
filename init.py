@@ -9,10 +9,17 @@ def home():
    # return tf_idf,log_reg,naive_bayes}
     return render_template("home.html")
 
-#@app.errorhandler(404) 
-def invalid_route(e): 
- return render_template('hello')
- 
+
+@app.errorhandler(404)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return render_template('404.html')
+
+@app.errorhandler(500)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return render_template('500.html') 
+
 
 @app.route("/user")
 def user():
@@ -37,21 +44,26 @@ def user_result():
         
         ''' 
         if 'Positive' in dataset.values :
-            pos=dataset["Sentiment"].value_counts()['Positive']
+            pos=dataset["AVG_Sentiment"].value_counts()['Positive']
         else:
             pos=0
         
         if 'Negative' in dataset.values :
-            neg=dataset["Sentiment"].value_counts()['Negative']
+            neg=dataset["AVG_Sentiment"].value_counts()['Negative']
         else:
             neg=0
        
         print(dataset)
         acc_name=sm.Twitter_account_name(user_name)
         print("Accouct_name="+acc_name)
+        
+        posstr,negstr=sm.sentimented_text(dataset)
+        
+       
+        print(type(posstr))
       
         
-        return render_template("user.html", dset=dataset,table=True,positive=pos,negative=neg,length=len(dataset),user_name_for_user_tab=user_name,account_name=acc_name)
+        return render_template("user.html",positive_string=posstr,negative_string=negstr, dset=dataset,table=True,positive=pos,negative=neg,length=len(dataset),user_name_for_user_tab=user_name,account_name=acc_name)
     
     
 
