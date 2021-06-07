@@ -182,8 +182,15 @@ def predict_text(text,model):
     timer = "%.2f seconds" % (time.time() - start_time)
     return sentiment[0],timer,prob      
 
+#for tweet prediction by API
 def tweets_of_twitter_user(user_name,no_of_tweets):
+    config = pd.read_csv("config.csv")
     
+
+    twitterApiKey = str(config['twitterApiKey'][0])
+    twitterApiSecret = str(config['twitterApiSecret'][0])
+    twitterApiAccessToken = str(config['twitterApiAccessToken'][0])
+    twitterApiAccessTokenSecret = str(config['twitterApiAccessTokenSecret'][0])
 
     # Authenticate
     auth = tweepy.OAuthHandler(twitterApiKey, twitterApiSecret)
@@ -215,24 +222,56 @@ def tweets_of_twitter_user(user_name,no_of_tweets):
     for model in [logistic_reg,naive_bayes,svm_model]:
             prediction=[]
             i=0
+            current=[]
             for tweets in tweet_DataBase["Tweet"]:
                 sen,timer,prob=predict_text(tweets,model)
                 
                 prediction.append(float(prob))
+                current.append(sen)
                 sentiment_score[i]=sentiment_score[i]+sen
                 
                 i+=1
             tweet_DataBase[model]=prediction
+           
+            tweet_DataBase[str(model)+" current"]=current
             
     sentiment_score=["Positive" if i>4 else "Negative" for i in sentiment_score]
-    tweet_DataBase.columns=["Tweets","log_reg","naive","svm"]
-    tweet_DataBase.insert(1,"Sentiment",sentiment_score,True)
+    tweet_DataBase.columns=["Tweets","log_reg","log_current","naive","naive_current","svm","svm_current"]
+    tweet_DataBase.insert(1,"AVG_Sentiment",sentiment_score,True)
+    
+    avg_accuracy=[]
+    
+    for i in range(no_of_tweets):
+        l=tweet_DataBase['log_reg'][i]
+        n=tweet_DataBase['naive'][i]
+        s=tweet_DataBase['svm'][i]
+        avg=(l+n+s)/3
+        avg_accuracy.append(float(avg))
+    
+    tweet_DataBase["AVG_Accuracy"]=avg_accuracy
+    #tweet_DataBase.insert(-1,"AVG_Accuracy",avg_accuracy,True)
+    clear_text=[]
+    for tweet in tweet_DataBase["Tweets"]:
+        clear_text.append(preprocess(tweet))
+    tweet_DataBase["cleared_text"]=clear_text  
     return tweet_DataBase
 
-    
+def sentimented_text(d):
+    posstr = ""
+    negstr= " "
+    for text1 in d.loc[d['AVG_Sentiment'].values == 'Positive']['cleared_text']:
+        posstr += text1
+
+
+    for text2 in d.loc[d['AVG_Sentiment'].values == 'Negative']['cleared_text']:
+         negstr += text2
+
+    return posstr,negstr
+  
 def predict(model,text):
     textdata = vectorizer.transform([preprocess(text)])
     sentiment = model.predict(textdata)
+    print("we use it")
     return sentiment[0]
 
 def Twitter_account_name(user_name):
