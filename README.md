@@ -1,2 +1,3 @@
-## Sentiment Analysis using Machine Learning/
+## Sentiment Analysis using Machine Learning
+
 we will use a data set containing a collection of tweets to detect the sentiment associated with a particular tweet and detect it as negative or positive accordingly using Machine Learning.
